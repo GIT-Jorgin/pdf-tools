@@ -12,6 +12,12 @@
   align-items: center;
 }
 
+.react-pdf__Page__svg {
+  width: 100px !important;
+  height: 100px !important;
+  position: relative;
+}
+
 .footer {
   display: flex;
   flex: 1;
