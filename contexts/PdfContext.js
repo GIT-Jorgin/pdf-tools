@@ -1,6 +1,5 @@
 import { createContext, useState } from 'react';
-import { pdfjs } from 'react-pdf';
-import { formatBytes, ArrayId } from '../services/tools';
+import { formatBytes, ArrayId, NumOfPages } from '../services/tools';
 
 const PdfContext = createContext({ PdfInfo: null });
 
@@ -19,21 +18,15 @@ export function PdfProvider({ children }) {
                 return;
             }
 
-            //Get file url.
             const url = URL.createObjectURL(files[i])
-
-            //Get number of pages of file.
-            const NumOfPages = await pdfjs.getDocument(url).promise.then(function (doc) {
-                var numPages = doc.numPages;
-                return numPages;
-            })
+            const NumberOfPages = await NumOfPages(url);
 
             //Set and update data
             setData(oldArray => [...oldArray, {
                 id: ArrayId(),
                 name: files[i].name,
                 size: formatBytes(files[i].size),
-                numberOfPages: NumOfPages,
+                numberOfPages: NumberOfPages,
                 file: url
             }])
         }

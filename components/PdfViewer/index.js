@@ -3,17 +3,16 @@ import { Container } from "./styles";
 import { Document, Page } from 'react-pdf';
 
 export default function PdfViewer({ scale, file, page, numberOfPages }) {
-    const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
 
-    function onDocumentLoadSuccess({ numPages }) {
-        numberOfPages && numberOfPages(numPages);
+    function onDocumentLoadSuccess(data) {
+        console.log(data)
     }
 
     return (
-        <Container scale={scale}>
+        <Container>
             <Document renderMode={'svg'} file={file} onLoadSuccess={onDocumentLoadSuccess}>
-                <Page pageNumber={pageNumber} />
+                <Page width={165} pageNumber={pageNumber} />
             </Document>
         </Container>
     )

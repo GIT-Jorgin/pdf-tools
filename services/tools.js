@@ -1,3 +1,5 @@
+import { pdfjs } from 'react-pdf';
+
 //Convert bytes to KB, MB, GB... 
 export const formatBytes = (bytes, decimals = 2) => {
     if (bytes === 0) return '0 Bytes';
@@ -15,4 +17,12 @@ export const formatBytes = (bytes, decimals = 2) => {
 //Create id from arrays.
 export const ArrayId = () => {
     return Math.floor(Math.random() * 100)
+}
+
+//Get number of pages of file.
+
+export const NumOfPages = async(url) => {
+    const N = await pdfjs.getDocument(url).promise.then(function (doc) { return doc.numPages })
+
+    return N;
 }
