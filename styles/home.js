@@ -10,7 +10,7 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-    width: ${props => props.active ? '87%': '90%'};
+    width: ${props => props.active ? '87%' : '90%'};
     height: 90%;
     background-color: #F1F5F9;
     border-radius: 20px;
@@ -23,8 +23,13 @@ export const Content = styled.div`
     overflow-y: auto;
     overflow-x: hidden;
     transition: .3s;
-    margin-left: ${props => props.active ? '10px': '0'};;
+    margin-left: ${props => props.active ? '10px' : '0'};
 
+
+    @media(max-width: 820px){
+      width: 90%;
+      margin-left: 0;
+    }
 
     &::-webkit-scrollbar {
   width: 8px;
@@ -49,7 +54,8 @@ export const Menu = styled.div`
   justify-content: space-around;
   align-items: center;
   transition: .3s;
-  margin-right: ${props => props.active ? '0': '-200px'};
+  margin-right: ${props => props.active ? '0' : '-200px'};
+  z-index: 999;
 
   @media(max-width: 820px){
     position: fixed;
@@ -57,7 +63,7 @@ export const Menu = styled.div`
     height: 80px;
     flex-direction: row;
     margin: auto;
-    bottom: ${props => props.active ? '10px': '-100px'};
+    bottom: ${props => props.active ? '10px' : '-100px'};
     margin-right: 0;
   }
 

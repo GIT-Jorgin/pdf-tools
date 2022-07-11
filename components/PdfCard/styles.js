@@ -12,6 +12,7 @@ export const Container = styled.div`
     justify-content: center;
     align-items: center;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    touch-action: none;
 `;
 
 export const Overlay = styled.div`

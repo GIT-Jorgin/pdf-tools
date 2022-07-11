@@ -1,10 +1,10 @@
-import { useRef, useState } from "react";
+import { useRef, useState, memo } from "react";
 import { Badge, Container, Overlay } from "./styles";
 import {useSortable} from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { IoIosDocument } from 'react-icons/io';
 
-export default function PdfCard({ children, id, index, numPages }){
+const PdfCard = memo(({ children, id, index, numPages }) => {
 
     const {
         attributes,
@@ -30,4 +30,6 @@ export default function PdfCard({ children, id, index, numPages }){
             { children }
         </Container>
     )
-}
+})
+
+export default PdfCard
