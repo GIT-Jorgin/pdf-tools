@@ -13,14 +13,14 @@ export const formatBytes = (bytes, decimals = 2) => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
-
-//Create id from arrays.
+//Create id for arrays.
 export const ArrayId = () => {
-    return Math.floor(Math.random() * 100)
+    const randomId = Math.floor(Math.random() * 100)
+
+    return randomId +'a'
 }
 
 //Get number of pages of file.
-
 export const NumOfPages = async(url) => {
     const N = await pdfjs.getDocument(url).promise.then(function (doc) { return doc.numPages })
 

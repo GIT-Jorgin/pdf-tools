@@ -21,14 +21,14 @@ export const convertPdfToImages = async (file) => {
     const data = await readFileData(file);
     const pdf = await pdfjs.getDocument(data).promise;
     const canvas = document.createElement("canvas");
-        const page = await pdf.getPage(1);
-        const viewport = page.getViewport({ scale: 1 });
-        const context = canvas.getContext("2d");
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-        await page.render({ canvasContext: context, viewport: viewport }).promise;
-        image = canvas.toDataURL();
-    
+    const page = await pdf.getPage(1);
+    const viewport = page.getViewport({ scale: 1 });
+    const context = canvas.getContext("2d");
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+    await page.render({ canvasContext: context, viewport: viewport }).promise;
+    image = canvas.toDataURL();
+
     canvas.remove();
     return image;
 }
