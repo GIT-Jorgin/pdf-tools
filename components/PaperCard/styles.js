@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const Container = styled.div`
     width: 168px;
@@ -38,6 +38,10 @@ export const Badge = styled.div`
     bottom: 5px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     cursor: default;
+
+    & > p {
+        color: white;
+    }
 `;
 
 export const Delete = styled.button`
@@ -50,10 +54,14 @@ export const Delete = styled.button`
     border-radius: 100px;
     border: none;
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.10);
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &:disabled{
+        cursor: default;
+    }
 `;
 
 export const DraggableArea = styled.div`

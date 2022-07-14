@@ -2,10 +2,28 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     display: flex;
-    height: 100vh;
+    height: 100%;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    position: absolute;
+    overflow: hidden;
+`;
+
+export const Title = styled.h1`
+  color: #FF3358;
+  font-size: 20px;
+  margin-bottom: -20px;
+  margin-top: 40px;
+`;
+
+export const FileArea = styled.div`
+    display: flex;
+    height: 85%;
     justify-content: space-around;
     align-items: center;
-    max-width: 100vw;
+    width: 100vw;
     overflow: hidden;
 `;
 
@@ -42,6 +60,22 @@ export const Content = styled.div`
   background: #888; 
   border-radius: 20px;
 }
+`;
+
+export const Result = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const PdfResultSize = styled.span`
+  background: #2E2E32;
+  padding: 10px 18px;
+  color: #fff;
+  font-size: 10px;
+  border-radius: 100px;
+  font-weight: 500;
 `;
 
 export const Menu = styled.div`
@@ -84,9 +118,10 @@ export const Menu = styled.div`
   }
 `;
 
-export const MenuButton = styled.label`
-  width: 60px;
-  height: 60px;
+export const MenuButton = styled.button`
+  width: 50px;
+  height: 50px;
+  position: relative;
   background: rgb(252,24,47);
   background: linear-gradient(42deg, rgba(252,24,47,1) 0%, rgba(236,82,82,1) 100%);
   border-radius: 100px;
@@ -96,4 +131,23 @@ export const MenuButton = styled.label`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  &:nth-child(2) {
+    width: 60px;
+    height: 60px;
+  }
+
+  &:disabled {
+    background: #ACADB8;
+    cursor: default;
+    box-shadow: none;
+  }
+`;
+
+export const FileInputLabel = styled.label`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 100px;
+  cursor: ${props => props.disabled ? 'default': 'pointer'};
 `;

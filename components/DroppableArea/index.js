@@ -1,21 +1,7 @@
-import {
-    DndContext,
-    closestCenter,
-    TouchSensor,
-    KeyboardSensor,
-    PointerSensor,
-    useSensor,
-    useSensors,
-} from '@dnd-kit/core';
+import { DndContext, closestCenter, TouchSensor, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy } from '@dnd-kit/sortable';
 
-import {
-    arrayMove,
-    SortableContext,
-    sortableKeyboardCoordinates,
-    rectSortingStrategy
-} from '@dnd-kit/sortable';
-
-export default function Droppable({ items, setItems, children }) {
+export default function DroppableArea({ items, sortItems, children }) {
 
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -30,15 +16,11 @@ export default function Droppable({ items, setItems, children }) {
             },
         })
     );
-    
+
     return (
-        <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-        >
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext strategy={rectSortingStrategy} items={items}>
-                { children }
+                {children}
             </SortableContext>
         </DndContext>
     )
@@ -47,7 +29,7 @@ export default function Droppable({ items, setItems, children }) {
         const { active, over } = event;
 
         if (active.id !== over.id) {
-            setItems((items) => {
+            sortItems((items) => {
                 const oldIndex = items.findIndex(x => x.id === active.id);
                 const newIndex = items.findIndex(x => x.id === over.id);
                 return arrayMove(items, oldIndex, newIndex);

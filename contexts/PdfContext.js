@@ -36,8 +36,32 @@ export function PdfProvider({ children }) {
         }
     }
 
+    //Generate infos from final file
+    async function GenerateFinalFile(blob) {
+        const GetBlob = await fetch(blob).then(r => r.blob());
+
+        const [numberOfPages, base64] = await Promise.all([
+            NumOfPages(blob), convertPdfToImages(GetBlob)
+        ]);
+
+        const id = ArrayId();
+        const name = 'mergedPDF.pdf';
+        const file = blob;
+        const size = formatBytes(GetBlob.size);
+
+        return {
+            id,
+            name,
+            size,
+            numberOfPages,
+            file,
+            base64
+        }
+
+    }
+
     return (
-        <PdfContext.Provider value={{ FileList, GetFileInfo, setFileList }}>
+        <PdfContext.Provider value={{ FileList, GetFileInfo, setFileList, GenerateFinalFile }}>
             {children}
         </PdfContext.Provider>
     )
