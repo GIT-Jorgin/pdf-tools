@@ -3,12 +3,12 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { IoIosDocument } from 'react-icons/io';
 import { FaTrash } from 'react-icons/fa';
-
+import PropTypes from 'prop-types'
 
 //A4 paper
 export function PaperCard({ children, numPages }) {
   return (
-    <Container style={{cursor: 'default'}}>
+    <Container style={{ cursor: 'default' }}>
       <Overlay>
         <Badge>
           <IoIosDocument color="white" />
@@ -18,6 +18,15 @@ export function PaperCard({ children, numPages }) {
       {children}
     </Container>
   )
+}
+
+PaperCard.defaultProps = {
+  numPages: 0
+}
+
+PaperCard.propTypes = {
+  children: PropTypes.element,
+  numPages: PropTypes.number
 }
 
 //A4 paper draggable
@@ -44,3 +53,18 @@ export function PaperCardDraggable({ children, id, numPages, onRemove, disabled,
     </Container>
   )
 };
+
+PaperCardDraggable.defaultProps = {
+  numPages: 0,
+  disabled: false,
+  deletable: false
+}
+
+PaperCardDraggable.propTypes = {
+  children: PropTypes.element,
+  id: PropTypes.string,
+  numPages: PropTypes.number,
+  onRemove: PropTypes.func,
+  disabled: PropTypes.bool,
+  deletable: PropTypes.bool
+}

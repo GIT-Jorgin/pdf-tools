@@ -5,7 +5,6 @@ import '../styles/Home.module.css';
 import { Container, Content, FileArea, FileInputLabel, Menu, MenuButton, PdfResultSize, Result, Title } from '../styles/home';
 import DroppableArea from '../components/DroppableArea';
 import GetFile from '../components/GetFile';
-import PdfContext from '../contexts/PdfContext';
 import { IoCheckmarkDoneSharp } from 'react-icons/io5';
 import { MdAdd } from 'react-icons/md';
 import { FaTrash } from 'react-icons/fa';
@@ -14,7 +13,6 @@ import { TbDownload } from 'react-icons/tb';
 import fileDownload from 'js-file-download';
 import { PaperCard, PaperCardDraggable } from '../components/PaperCard';
 import { SimpleSpinner } from '../components/Loaders';
-
 
 export default function Home() {
   const [FileList, setFileList] = useState([]);
@@ -76,7 +74,7 @@ export default function Home() {
     <Container>
       <Title>Mesclar arquivos <font color='#fff' style={{ backgroundColor: '#FF3358', padding: '2px 5px', borderRadius: 4 }}>PDF</font></Title>
       <FileArea>
-        <Content active={!!FileList.length > 0}>
+        <Content finalFile={!!finalFile} active={!!FileList.length > 0}>
           <DroppableArea items={FileList} sortItems={(data) => setFileList(data)}>
             {
               !finalFile ? (

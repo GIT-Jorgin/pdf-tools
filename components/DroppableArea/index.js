@@ -1,5 +1,7 @@
 import { DndContext, closestCenter, TouchSensor, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy } from '@dnd-kit/sortable';
+import PropTypes from 'prop-types';
+
 
 export default function DroppableArea({ items, sortItems, children }) {
 
@@ -36,4 +38,14 @@ export default function DroppableArea({ items, sortItems, children }) {
             });
         }
     }
+}
+
+DroppableArea.defaultProps = {
+    
+}
+
+DroppableArea.propTypes = {
+    items: PropTypes.array,
+    sortItems: PropTypes.func,
+    children: PropTypes.element
 }

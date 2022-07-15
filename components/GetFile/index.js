@@ -1,9 +1,7 @@
-import { useContext } from 'react';
 import { Container, Input, Label } from "./style";
-import PdfContext from '../../contexts/PdfContext';
+import PropTypes from 'prop-types'
 
 export default function GetFile({ files }) {
-    const { GetFileInfo } = useContext(PdfContext);
 
     return (
         <Container>
@@ -17,4 +15,12 @@ export default function GetFile({ files }) {
                 multiple />
         </Container>
     )
+}
+
+GetFile.defaultProps = {
+    
+}
+
+GetFile.propTypes = {
+    files: PropTypes.func
 }
