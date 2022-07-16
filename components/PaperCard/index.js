@@ -10,10 +10,10 @@ export function PaperCard({ children, numPages }) {
   return (
     <Container style={{ cursor: 'default' }}>
       <Overlay>
-        <Badge>
+        {numPages > 0 && <Badge>
           <IoIosDocument color="white" />
           <p>{numPages || 0}</p>
-        </Badge>
+        </Badge>}
       </Overlay>
       {children}
     </Container>
@@ -43,10 +43,10 @@ export function PaperCardDraggable({ children, id, numPages, onRemove, disabled,
     <Container ref={setNodeRef} style={style}>
       <Overlay>
         {deletable && <Delete disabled={disabled} onClick={() => onRemove(id)}><FaTrash fontSize={14} color="#EC233B" /></Delete>}
-        <Badge>
+        {numPages > 0 && <Badge>
           <IoIosDocument color="white" />
           <p>{numPages || 0}</p>
-        </Badge>
+        </Badge>}
         <DraggableArea {...attributes} {...listeners} />
       </Overlay>
       {children}

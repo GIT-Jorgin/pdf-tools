@@ -1,26 +1,27 @@
 import { Container, Input, Label } from "./style";
 import PropTypes from 'prop-types'
 
-export default function GetFile({ files }) {
+export default function GetFile({ files, accept, style }) {
 
     return (
         <Container>
-            <Label htmlFor="file">Selecionar arquivos</Label>
+            <Label style={style} htmlFor="file">Selecionar arquivos</Label>
             <Input
                 onChange={(data) => files(data)}
                 type="file"
                 id="file"
                 name="file"
-                accept={"application/pdf"}
+                accept={accept}
                 multiple />
         </Container>
     )
 }
 
 GetFile.defaultProps = {
-    
+    accept: ''
 }
 
 GetFile.propTypes = {
-    files: PropTypes.func
+    files: PropTypes.func,
+    accept: PropTypes.string
 }
