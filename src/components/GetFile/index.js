@@ -1,4 +1,4 @@
-import { Container, Input, Label } from "./style";
+import { Container, Input, Label } from "./styles";
 import PropTypes from 'prop-types'
 
 export default function GetFile({ files, accept, style }) {

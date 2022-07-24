@@ -25,7 +25,6 @@ PaperCard.defaultProps = {
 }
 
 PaperCard.propTypes = {
-  children: PropTypes.element,
   numPages: PropTypes.number
 }
 
@@ -40,7 +39,7 @@ export function PaperCardDraggable({ children, id, numPages, onRemove, disabled,
   };
 
   return (
-    <Container ref={setNodeRef} style={style}>
+    <Container disabled={!!disabled} ref={setNodeRef} style={style}>
       <Overlay>
         {deletable && <Delete disabled={disabled} onClick={() => onRemove(id)}><FaTrash fontSize={14} color="#EC233B" /></Delete>}
         {numPages > 0 && <Badge>
@@ -55,6 +54,7 @@ export function PaperCardDraggable({ children, id, numPages, onRemove, disabled,
 };
 
 PaperCardDraggable.defaultProps = {
+  id: null,
   numPages: 0,
   disabled: false,
   deletable: false

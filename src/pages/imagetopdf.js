@@ -9,20 +9,25 @@ import {
   PdfResultSize,
   Result,
   Title,
-} from "../styles/mergepdf";
+} from "../styles/imagetopdf";
 import DroppableArea from "../components/DroppableArea";
 import GetFile from "../components/GetFile";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { MdAdd } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
-import { GetFileInfo, MergePDF, GenerateFinalFile } from "../services/pdf";
+import {
+  fileToImageURL,
+  generatePdfFromImages,
+  GenerateFinalFile,
+} from "../services/pdf";
 import { TbDownload } from "react-icons/tb";
 import fileDownload from "js-file-download";
 import { PaperCard, PaperCardDraggable } from "../components/PaperCard";
 import { SimpleSpinner } from "../components/Loaders";
+import { ArrayId } from "../services/tools";
 import { Menu, MenuButton } from "../components/Menu";
 
-export default function Home() {
+export default function ImageToPdf() {
   const [FileList, setFileList] = useState([]);
   const [finalFile, setFinalFile] = useState();
   const [loading, setLoading] = useState(false);
@@ -32,19 +37,37 @@ export default function Home() {
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }, []);
 
+  console.log(FileList);
+
   //Get and organize files
   async function handle_Files(data) {
     setLoading(true);
-    const files = await GetFileInfo(data);
+    const files = data.target.files;
 
-    if (files) {
-      setLoading(false);
-      for (let i = 0; i < files.length; i++) {
-        setFileList((oldFiles) => [...oldFiles, files[i]]);
-      }
-    } else {
-      setLoading(false);
+    async function blobToBase64(blob) {
+      return new Promise((resolve, _) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
     }
+
+    for (let i = 0; i < files.length; i++) {
+      const blob = await fileToImageURL(files[i]);
+      const DownloadBlob = await fetch(blob.src).then((r) => r.blob());
+      const base64 = await blobToBase64(DownloadBlob);
+
+      setFileList((oldFiles) => [
+        ...oldFiles,
+        {
+          id: ArrayId(),
+          file: blob,
+          base64: base64,
+        },
+      ]);
+    }
+    setLoading(false);
+    //console.log(generatePdfFromImages(images));
   }
 
   //Make pdf merged
@@ -53,9 +76,15 @@ export default function Home() {
       const DownloadBlob = await fetch(finalFile.file).then((r) => r.blob());
       fileDownload(DownloadBlob, finalFile.name);
     } else {
+      var images = [];
+
+      for (let i = 0; i < FileList.length; i++) {
+        images.push(FileList[i].file);
+      }
+
       setLoading(true);
-      const Blob = await MergePDF(FileList);
-      const file = await GenerateFinalFile(Blob, "MergedPDF.pdf").then(
+      const Blob = await generatePdfFromImages(images);
+      const file = await GenerateFinalFile(Blob, "ImagesToPDF.pdf").then(
         (data) => {
           setLoading(false);
           return data;
@@ -77,7 +106,7 @@ export default function Home() {
               onRemove={(deleteID) =>
                 setFileList(FileList.filter((item) => item.id != deleteID))
               }
-              numPages={data.numberOfPages}
+              numPages={0}
               key={data.id}
               id={data.id}
               index={index}
@@ -109,14 +138,14 @@ export default function Home() {
   return (
     <Container>
       <Head>
-        <title>PDF Tools - Mesclar PDF</title>
+        <title>PDF Tools - Imagem para PDF</title>
       </Head>
-      <Title>
-        Mesclar arquivos{" "}
+      <Title style={{ color: "#62A9F5" }}>
+        Converter imagens para{" "}
         <font
           color="#fff"
           style={{
-            backgroundColor: "#FF3358",
+            backgroundColor: "#62A9F5",
             padding: "2px 5px",
             borderRadius: 4,
           }}
@@ -137,7 +166,11 @@ export default function Home() {
                 <p>CARREGANDO...</p>
               ) : (
                 <GetFile
-                  accept={"application/pdf"}
+                  style={{
+                    backgroundColor: "rgba(98, 169, 245, .2)",
+                    color: "#62A9F5",
+                  }}
+                  accept={"image/jpeg, image/png"}
                   files={(data) => handle_Files(data)}
                 />
               )
@@ -169,7 +202,7 @@ export default function Home() {
               type="file"
               id="file"
               name="file"
-              accept={"application/pdf"}
+              accept={"image/jpeg, image/png"}
               multiple
             />
           </MenuButton>
@@ -177,7 +210,11 @@ export default function Home() {
             {finalFile ? (
               <TbDownload fontSize="26" color="#fff" />
             ) : loading ? (
-              <SimpleSpinner scale={0.4} />
+              <SimpleSpinner
+                style={{ position: "absolute" }}
+                color={"#fff"}
+                scale={0.4}
+              />
             ) : (
               <IoCheckmarkDoneSharp fontSize="20" color="#fff" />
             )}

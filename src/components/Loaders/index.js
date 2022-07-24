@@ -1,9 +1,9 @@
 import { Container } from "./styles";
 import PropTypes from 'prop-types'
 
-export function SimpleSpinner({ scale, color }) {
+export function SimpleSpinner({ scale, color, style }) {
     return (
-        <Container scale={scale} color={color}>
+        <Container style={style} scale={scale} color={color}>
             <div></div>
             <div></div>
             <div></div>
@@ -22,7 +22,7 @@ export function SimpleSpinner({ scale, color }) {
 
 SimpleSpinner.defaultProps = {
     scale: 1,
-    color: '#fff'
+    color: '#000'
 }
 
 SimpleSpinner.propTypes = {

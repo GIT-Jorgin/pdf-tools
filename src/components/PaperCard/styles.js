@@ -5,7 +5,7 @@ export const Container = styled.div`
     position: relative;
     height: 237.6px;
     background-color: white;
-    cursor: move;
+    cursor: ${props => props.disabled ? "default": "move"};
     border-radius: 5px;
     margin: 15px;
     display: flex;

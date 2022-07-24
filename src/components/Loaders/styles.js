@@ -11,7 +11,6 @@ const ldsSpinner = keyframes`
 
 export const Container = styled.div`
   display: inline-block;
-  position: absolute;
   width: 80px;
   height: 80px;
   transform: ${props => `scale(${props.scale || 1})`};
